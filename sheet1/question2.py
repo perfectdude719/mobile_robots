@@ -1,5 +1,5 @@
 import math
-
+import matplotlib.pyplot as plt
 
 def forward_differential(x,y,theta,v_l,v_r,t,l):
     #if moving in straight line vl=vr
@@ -32,7 +32,23 @@ commands = [
     (0.2, 0, 2)        # c3
 ]
 
+# Lists to store robot's position
+x_positions = [x]
+y_positions = [y]
+
 # Execute commands
 for i, (v_l, v_r, t) in enumerate(commands):
     x, y, theta = forward_differential(x, y, theta, v_l, v_r, t, l)
+    x_positions.append(x)
+    y_positions.append(y)
     print(f"After command {i+1}: x = {x:.2f} m, y = {y:.2f} m, θ = {theta:.2f} rad")
+    
+# Plot the robot's trajectory
+plt.plot(x_positions, y_positions, marker='o', linestyle='-', color='b', label='Trajectory')
+plt.xlabel('X Position (m)')
+plt.ylabel('Y Position (m)')
+plt.title('Robot Trajectory')
+plt.grid(True)
+plt.legend()
+plt.axis('equal')  # Equal scaling for both axes
+plt.show()
